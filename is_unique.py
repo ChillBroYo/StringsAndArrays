@@ -54,9 +54,9 @@ end_time = timer()
 print(str.format("isUnique: {} {} {} {} {}", val_1, val_2, val_3, val_4, end_time - start_time ))
 
 start_time = timer()
-is_unique_faster("Hello") # False Case
-is_unique_faster("That isn't possible") # False Case
-is_unique_faster("Safe word") # Success Case
-is_unique_faster(string_val) # Long Case
+val_1 = is_unique_faster("Hello") # False Case
+val_2 = is_unique_faster("That isn't possible") # False Case
+val_3 = is_unique_faster("Safe word") # Success Case
+val_4 = is_unique_faster(string_val) # Long Case
 end_time = timer()
 print(str.format("isUniqueFaster: {} {} {} {} {}", val_1, val_2, val_3, val_4, end_time - start_time ))
