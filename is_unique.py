@@ -2,9 +2,9 @@
 # Bonus: Do not use additional data structures
 
 #-- First solution: Use a single list and check entire list each time a new character is added
-#-- Run Complexity: O(n^2) || In the worst case, the code needs to check each item n times, to ensure
+#-- Run Complexity: O(N^2) || In the worst case, the code needs to check each item n times, to ensure
 # each item does not match with any other case
-#-- Space Complexity: N || Uses a list of values the same size of the initial set to ensure 
+#-- Space Complexity: O(N) || Uses a list of values the same size of the initial set to ensure 
 # end set is unique
 def is_unique(check_string):
     storage_list = []
