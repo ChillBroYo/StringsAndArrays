@@ -22,19 +22,19 @@ def urlify(string_to_convert):
 
     return ''.join(string_to_convert)
 
+if __name__ == "__main__":
+    import time
+    from random import choice
+    from string import lowercase
+    from timeit import default_timer as timer
+    string_val = "".join(choice(lowercase) for i in range(1000))
 
-import time
-from random import choice
-from string import lowercase
-from timeit import default_timer as timer
-string_val = "".join(choice(lowercase) for i in range(1000))
 
-
-start_time = timer()
-val_1 = urlify("Hello").count("%20") == 0 # None Case
-val_2 = urlify(" That isn't possible ").count("%20") == 2 # 2 Case
-val_3 = urlify("l That isn't possible l").count("%20") == 4 # 4 Case
-val_4 = urlify("Safe w ord").count("%20") == 2 # Weird 2 Case
-val_5 = urlify(string_val).count("%20") == 0 # Long 0 Case
-end_time = timer()
-print(str.format("urlify: {} || {} || {} || {} || {}", val_1, val_2, val_3, val_4, end_time - start_time ))
+    start_time = timer()
+    val_1 = urlify("Hello").count("%20") == 0 # None Case
+    val_2 = urlify(" That isn't possible ").count("%20") == 2 # 2 Case
+    val_3 = urlify("l That isn't possible l").count("%20") == 4 # 4 Case
+    val_4 = urlify("Safe w ord").count("%20") == 2 # Weird 2 Case
+    val_5 = urlify(string_val).count("%20") == 0 # Long 0 Case
+    end_time = timer()
+    print(str.format("urlify: {} || {} || {} || {} || {}", val_1, val_2, val_3, val_4, end_time - start_time ))
