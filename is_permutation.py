@@ -34,15 +34,18 @@ def is_permutation(string_1, string_2):
 #-- Runtime Complexity: O(2N + K) => O(N + K) || Loops over the first set twice and the second 
 # set once where n is the len(string_1) and k is the len(string_2)
 #-- Space Complexity: O(N) || Stores a hash table of values the same size as the first string
-def is_permutation_faster(string_1, string_2):
-    hash_table = {}
+#-- Library Support: If the first string has already been scanned, optional input param,
+# accepts it and prevents extra sweep
+def is_permutation_faster(string_1, string_2, hash_table = {}):
 
-    # Store count of each element appearing in the initial set
-    for char in string_1:
-        if hash_table.get(char) == None:
-            hash_table[char] = 1
-        else:
-            hash_table[char] += 1
+    # Library Speed Support
+    if hash_table == {}:
+        # Store count of each element appearing in the initial set
+        for char in string_1:
+            if hash_table.get(char) == None:
+                hash_table[char] = 1
+            else:
+                hash_table[char] += 1
 
     # Remove occurences of second string from first
     for char in string_2:
@@ -58,27 +61,28 @@ def is_permutation_faster(string_1, string_2):
 
     return True
 
-import time
-from random import choice
-from string import lowercase
-from timeit import default_timer as timer
-string_val = "".join(choice(lowercase) for i in range(10000))
+if __name__ == "__main__":
+    import time
+    from random import choice
+    from string import lowercase
+    from timeit import default_timer as timer
 
+    string_val = "".join(choice(lowercase) for i in range(10000))
 
-start_time = timer()
-val_1 = is_permutation("Hello", "olleH") # True Case
-val_2 = is_permutation("aHello", "Hello") # False Case
-val_3 = is_permutation("Hello", "olleHa") # False Case
-val_4 = is_permutation("rfv bgt", "tgb vfr") # True Case
-val_5 = is_permutation(string_val, string_val) # Long Case
-end_time = timer()
-print(str.format("isPermutation: {} {} {} {} {} {}", val_1, val_2, val_3, val_4, val_5, end_time - start_time ))
+    start_time = timer()
+    val_1 = is_permutation("Hello", "olleH") # True Case
+    val_2 = is_permutation("aHello", "Hello") # False Case
+    val_3 = is_permutation("Hello", "olleHa") # False Case
+    val_4 = is_permutation("rfv bgt", "tgb vfr") # True Case
+    val_5 = is_permutation(string_val, string_val) # Long Case
+    end_time = timer()
+    print(str.format("isPermutation: {} {} {} {} {} {}", val_1, val_2, val_3, val_4, val_5, end_time - start_time ))
 
-start_time = timer()
-val_1 = is_permutation_faster("Hello", "olleH") # True Case
-val_2 = is_permutation_faster("aHello", "Hello") # False Case
-val_3 = is_permutation_faster("Hello", "olleHa") # False Case
-val_4 = is_permutation_faster("rfv bgt", "tgb vfr") # True Case
-val_5 = is_permutation_faster(string_val, string_val) # Long Case
-end_time = timer()
-print(str.format("isPermutation: {} {} {} {} {} {}", val_1, val_2, val_3, val_4, val_5, end_time - start_time ))
+    start_time = timer()
+    val_1 = is_permutation_faster("Hello", "olleH") # True Case
+    val_2 = is_permutation_faster("aHello", "Hello") # False Case
+    val_3 = is_permutation_faster("Hello", "olleHa") # False Case
+    val_4 = is_permutation_faster("rfv bgt", "tgb vfr") # True Case
+    val_5 = is_permutation_faster(string_val, string_val) # Long Case
+    end_time = timer()
+    print(str.format("isPermutation: {} {} {} {} {} {}", val_1, val_2, val_3, val_4, val_5, end_time - start_time ))
