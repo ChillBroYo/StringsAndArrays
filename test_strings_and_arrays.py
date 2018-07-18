@@ -5,7 +5,6 @@ from is_unique import is_unique_faster
 # Needed Imports
 import time
 from random import choice
-from string import lowercase
 from timeit import default_timer as timer
 
 # Test is_unique.py functionality
