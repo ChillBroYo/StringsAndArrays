@@ -64,10 +64,9 @@ def is_permutation_faster(string_1, string_2, hash_table = {}):
 if __name__ == "__main__":
     import time
     from random import choice
-    from string import lowercase
+    import string
     from timeit import default_timer as timer
-
-    string_val = "".join(choice(lowercase) for i in range(10000))
+    string_val = "".join(choice(string.ascii_lowercase) for i in range(10000))
 
     start_time = timer()
     val_1 = is_permutation("Hello", "olleH") # True Case
@@ -76,7 +75,7 @@ if __name__ == "__main__":
     val_4 = is_permutation("rfv bgt", "tgb vfr") # True Case
     val_5 = is_permutation(string_val, string_val) # Long Case
     end_time = timer()
-    print(str.format("isPermutation: {} {} {} {} {} {}", val_1, val_2, val_3, val_4, val_5, end_time - start_time ))
+    print(str.format("is_permutation: {} {} {} {} {} {}", val_1, val_2, val_3, val_4, val_5, end_time - start_time ))
 
     start_time = timer()
     val_1 = is_permutation_faster("Hello", "olleH") # True Case
@@ -85,4 +84,4 @@ if __name__ == "__main__":
     val_4 = is_permutation_faster("rfv bgt", "tgb vfr") # True Case
     val_5 = is_permutation_faster(string_val, string_val) # Long Case
     end_time = timer()
-    print(str.format("isPermutation: {} {} {} {} {} {}", val_1, val_2, val_3, val_4, val_5, end_time - start_time ))
+    print(str.format("is_permutation_faster: {} {} {} {} {} {}", val_1, val_2, val_3, val_4, val_5, end_time - start_time ))

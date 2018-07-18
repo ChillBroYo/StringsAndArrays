@@ -58,9 +58,9 @@ def is_palindrome(string_1, string_2, dictionary = {}):
 if __name__ == "__main__":
     import time
     from random import choice
-    from string import lowercase
+    import string
     from timeit import default_timer as timer
-    string_val = "".join(choice(lowercase) for i in range(1000))
+    string_val = "".join(choice(string.ascii_lowercase) for i in range(1000))
 
 
     start_time = timer()
