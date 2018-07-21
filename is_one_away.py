@@ -13,5 +13,3 @@ def is_one_away(string_1, string_2):
             unique_items[char] = 1
         else:
             unique_items[char] += 1
-
-        
