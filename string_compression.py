@@ -6,13 +6,16 @@
 
 # First solution: Go over the string once, and count duplicate letters, placing the counts in the new string
 def compress_string(string_to_compress, return_compressed_value = False):
-    compressed_string = ""
+    #compressed_string = ""
     counter = 1
     character_on = ""
     prev_character = ""
+    final_list = []
     for char in string_to_compress:
         if char != prev_character and prev_character != "":
-            compressed_string += str.format("{}{}", character_on, counter)
+            # compressed_string += str.format("{}{}", character_on, counter)
+            final_list.append(str(character_on))
+            final_list.append(str(counter))
             character_on = char
             counter = 1
         elif prev_character == "":
@@ -23,7 +26,7 @@ def compress_string(string_to_compress, return_compressed_value = False):
         
         prev_character = char
     
-    compressed_string += str.format("{}{}", character_on, counter)
+    compressed_string = "".join(final_list)
     if len(compressed_string) < len(string_to_compress) or return_compressed_value:
         return compressed_string
     
