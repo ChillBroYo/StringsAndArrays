@@ -3,33 +3,29 @@
 # "banana" ==> "nabana", which is a rotation to the right by 2) by using only one method
 # call to isSubstring
 
-# First Solution: since there must be an exact match of the pattern, start at the first letter
-# in the first set, find it in the second set and see if the following pattern matches, if not,
-# move on to the next occurence of the character, do this until either the pattern matches or 
-# if there are no more occurences to which, return false
-def is_rotated_string(string_1, string_2):
-    counter = 0
-    for str_1_index in range(len(string_1)):
-        if string_1[str_1_index] in string_2:
-            start_index = string_2.find(string_1[str_1_index])
-            for x in range(len(string_1)):
-                if start_index + x > len(string_2) and string_1[x] == string_2[(start_index + x) - len(string_2)]:
-                    counter += 1
-                else:
-                    counter = 0
-                    break
+# First Solution: Look into shifting each character to the back until there is either a match
+# found or the loop ends, found duplicate answer in duplicating the string, and checking if 
+# substring
+def is_rotation(string_1, string_2):
+    
+    if len(string_1) == len(string_2):
+        new_string = string_1 + string_1
+        return isSubstring(new_string, string_2)
+    return False
 
-                if string_1[x] == string_2[start_index + x]:
-                    counter += 1
-                else:
-                    counter = 0
-                    break
-            print(counter)
-            if counter == len(string_1):
-                return True
-        else:
-            return False
+# First Solution: Failure to come up with a clean method, realized that python can handle it with a simple in call
+def isSubstring(string_1, string_2):
+    if string_2 in string_1:
+        return True
 
     return False
 
-print(is_rotated_string("Hello", "oHell"))
+
+
+print (isSubstring("Hello","ello"))
+print (isSubstring("Hello","He"))
+print (isSubstring("Hello","Blah"))
+print (isSubstring("Hello","oH"))
+print("-----")
+print (is_rotation("Hello","oH"))
+print (is_rotation("Hello","oHell"))
