@@ -38,6 +38,10 @@ def is_permutation(string_1, string_2):
 # accepts it and prevents extra sweep
 def is_permutation_faster(string_1, string_2, hash_table = {}):
 
+    # Size check
+    if len(string_1) != len(string_2):
+        return False
+
     # Library Speed Support
     if hash_table == {}:
         # Store count of each element appearing in the initial set
@@ -53,11 +57,8 @@ def is_permutation_faster(string_1, string_2, hash_table = {}):
             return False
         else:
             hash_table[char] -= 1
-
-    # See if any occurences from first set remain
-    for key in hash_table:
-        if hash_table[key] != 0:
-            return False
+            if hash_table[char] < 0:
+                return False
 
     return True
 
