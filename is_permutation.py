@@ -28,6 +28,27 @@ def is_permutation(string_1, string_2):
     
     return permutation
 
+# Determine if 2 strings are permuations of each other
+# Strategy: Loop through one string and count occurrences, then check other string for same count
+def is_permutation2(cntrl_str, str_check):
+    uni_check = {}
+
+    for char in cntrl_str:
+        hchar = hash(char)
+        if uni_check.get(hchar) == None:
+            uni_check[hchar] = 1
+        else:
+            uni_check[hchar] += 1
+
+    for char in str_check:
+        hchar = hash(char)
+        if uni_check.get(hchar) == None or uni_check.get(hchar) == 0:
+            return False
+        else:
+            uni_check[hchar] -= 1
+    
+    return True
+
 
 #-- Improved Speed Solution: Store all the items in a hashtable using the string as a key attached
 # to a value counting the number of appearances. Then see which characters appear in string_2
