@@ -6,8 +6,6 @@
 # each item does not match with any other case
 # -- Space Complexity: O(N) || Uses a list of values the same size of the initial set to ensure
 # end set is unique
-
-
 def is_unique(check_string):
     storage_list = []
     for char in check_string:
@@ -19,13 +17,27 @@ def is_unique(check_string):
     # If we've checked all the characters and none of them have been repeated, string is unique
     return True
 
+
+# Determine if a string has all unique characters
+# Strategy: Have a map, walkthrough each item and store/check against the map for each character, when a duplicate value is found
+# return false else return true
+def is_unique_simple(str_check):
+    map_store = {}
+
+    for char in str_check:
+        hchar = hash(char)
+        if map_store.get(hchar) == None:
+            map_store[hchar] = 1
+        else:
+            return False
+
+    return True
+
 # -- Improved speed solution: Places each character into a hash map, knowing if theres a duplicate when an
 # identical has value has been generated
 # -- Run Complexity: O(n) || In the worst case, the code checks each character in the string exactly
 # once
 # -- Space Complexity: N || Uses a hashtable of elements the size of the original string
-
-
 def is_unique_faster(check_string):
     hash_storage = {}
     unique = True
@@ -47,23 +59,35 @@ if __name__ == "__main__":
     from random import choice
     import string
     from timeit import default_timer as timer
-    string_val = "".join(choice(string.ascii_lowercase) for i in range(1000000))
+
+    rnd_words = []
+    for i in range(1000):
+        rnd_words.append("".join(choice(string.ascii_lowercase) for i in range(1000)))
 
 
     start_time = timer()
     val_1 = is_unique("Hello")  # False Case
     val_2 = is_unique("That isn't possible")  # False Case
     val_3 = is_unique("Safe word")  # Success Case
-    val_4 = is_unique(string_val)  # Long Case
+    for i in rnd_words:
+        is_unique(i)
     end_time = timer()
-    print(str.format("isUnique: {} {} {} {} {}", val_1,
-                    val_2, val_3, val_4, end_time - start_time))
+    print(str.format("is_unique:        {} {} {} {}", val_1,val_2, val_3, end_time - start_time))
+
+    start_time = timer()
+    val_5 = is_unique("Hello")  # False Case
+    val_6 = is_unique("That isn't possible")  # False Case
+    val_7 = is_unique("Safe word")  # Success Case
+    for i in rnd_words:
+        is_unique_simple(i)
+    end_time = timer()
+    print(str.format("is_unique2:       {} {} {} {}", val_5, val_6, val_7, end_time - start_time))
 
     start_time = timer()
     val_1 = is_unique_faster("Hello")  # False Case
     val_2 = is_unique_faster("That isn't possible")  # False Case
     val_3 = is_unique_faster("Safe word")  # Success Case
-    val_4 = is_unique_faster(string_val)  # Long Case
+    for i in rnd_words:
+        is_unique_faster(i)
     end_time = timer()
-    print(str.format("isUniqueFaster: {} {} {} {} {}",
-                    val_1, val_2, val_3, val_4, end_time - start_time))
+    print(str.format("is_unique_faster: {} {} {} {}", val_1, val_2, val_3, end_time - start_time))
