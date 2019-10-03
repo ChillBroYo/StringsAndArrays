@@ -21,6 +21,7 @@ def is_unique(check_string):
 # Determine if a string has all unique characters
 # Strategy: Have a map, walkthrough each item and store/check against the map for each character, when a duplicate value is found
 # return false else return true
+# O(n) => linear | Mem Usage: O(n) => linear
 def is_unique_simple(str_check):
     map_store = {}
 
