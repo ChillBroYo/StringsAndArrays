@@ -117,4 +117,19 @@ def check_replace_or_none(str_check1, str_check2):
     return True
 
 # Compress a string with this pattern => aaabbccaa -> a3b2c2a2
-#def compress_string_count(str_cmp):
+def compress_string_count(str_cmp):
+    cmp_string_list = []
+    current_char = ""
+    count = 0
+    for x in range(len(str_cmp)):
+        if current_char == "":
+            current_char = str_cmp[x]
+            x -= 1
+            continue
+        elif current_char != str_cmp[x]:
+            cmp_string_list.append(str.format("{}{}", current_char, count))
+            current_char = str_cmp[x]
+            x -= 1
+        count += 1
+
+    return "".join(cmp_string_list) # O(n) | Space O(n)
