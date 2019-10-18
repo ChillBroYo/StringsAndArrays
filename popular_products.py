@@ -47,9 +47,8 @@ class Popular_Products_Processor:
             return "pid: {}, quantity: {}, uuid_count: {}".format(self.pid, self.quantity, len(self.uuids))
 
     def load_and_process(self, filename):
-        with open(filename) as f:
-            content = f.readlines()
-            for line in content:
+        with open(filename, "r") as file:
+            for line in file:
                 json_line = json.loads(line)
                 pid    = json_line["product_id"]
                 uid    = json_line["user_id"]
@@ -86,16 +85,9 @@ class Popular_Products_Processor:
         
         return [popular_by_uuid, popular_by_quantity]
 
-
-# Most popular product(s) based on the number of purchasers: [ "pid_2" ]
-# Most popular product(s) based on the quantity of goods sold: [ "pid_1" ]
 if __name__ == "__main__":
     processor = Popular_Products_Processor()
-    processor.load_and_process("/Users/Samson/Documents/projects/Strings_and_Arrays/sample_json_large.txt")
+    processor.load_and_process("filename here")
     val = processor.get_popular_products()
-    for key in processor.product_listing:
-        print(processor.product_listing[key].flatten_check())
-    print(processor.highest_uuid_count)
-    print(processor.highest_quantity)
     print("Most popular product(s) based on the number of purchasers: {}".format(val[0]))
     print("Most popular product(s) based on the quantity of goods sold: {}".format(val[1]))
