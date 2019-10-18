@@ -46,6 +46,7 @@ class Popular_Products_Processor:
         def flatten_check(self):
             return "pid: {}, quantity: {}, uuid_count: {}".format(self.pid, self.quantity, len(self.uuids))
 
+    # O(n * k) with n being the number of lines in the file and k being the number of unique user ids for that product id
     def load_and_process(self, filename):
         with open(filename, "r") as file:
             for line in file:
@@ -72,7 +73,7 @@ class Popular_Products_Processor:
                     if self.highest_uuid_count < 1:
                         self.highest_uuid_count = 1
 
-    # O(n) traversal for get
+    # O(n) with n being the number of elements in the product listing
     def get_popular_products(self):
         popular_by_quantity = []
         popular_by_uuid = []
