@@ -6,7 +6,7 @@
 # Assume that both strings only contain English alphabets and that neither is an empty string.
 # Note that x and y can be quite long (each containing millions of characters).
 
-# Speed Complexity: O(n) where 'n' is the size of param 'x' || Space Complexity: O(1)
+# Speed Complexity: O(n) where 'n' is the size of the larger of the 2 params (x or y) || Space Complexity: O(1)
 def equalsWhenOneCharRemoved(x, y):
   # Initial checks
   if abs(len(x) - len(y)) > 1 or len(x) == len(y):
