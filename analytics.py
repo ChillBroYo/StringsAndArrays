@@ -29,7 +29,6 @@ class TrafficLog:
             for line in file:
                 line = line.strip()
                 values = line.split("\t")
-                print(values)
                 ts = datetime.strptime(values[0], "%Y-%m-%d %H:%M:%S")
                 user_id = values[1]
                 country_id = values[2]
@@ -54,9 +53,43 @@ class TrafficLog:
                     self.country_id_map[country_id].append(new_record)
 
     def get_uuids_siteid_by_country(self, country_id):
-        return []
+        site_id_uuid = {}
+        most_uuid_site_id = [self.country_id_map[country_id][0].site_id, 1]
+        for log in self.country_id_map[country_id]:
+            if site_id_uuid.get(log.site_id) == None:
+                site_id_uuid[log.site_id] = [log.user_id]
+            else:
+                if log.user_id in site_id_uuid[log.site_id]:
+                    continue
+                site_id_uuid[log.site_id].append(log.user_id)
+                if len(site_id_uuid[log.site_id]) > most_uuid_site_id[1]:
+                    most_uuid_site_id[0] = log.site_id
+                    most_uuid_site_id[1] = len(site_id_uuid[log.site_id])
+
+
+        return most_uuid_site_id
     
     def find_users_by_ts_and_site_visits(self, ts_start, ts_end, min_num_visits):
+        site_id_to_user_id_to_visits = {}
+        for ts in self.ts_map:
+            if ts > ts_start and ts < ts_end:
+                for uid in range(len(self.ts_map[ts])):
+                    if site_id_to_user_id_to_visits.get(self.ts_map[ts][uid].site_id) == None:
+                        site_id_to_user_id_to_visits[self.ts_map[ts][uid].site_id] = {self.ts_map[ts][uid].user_id: 1}
+                    elif site_id_to_user_id_to_visits.get(self.ts_map[ts][uid].site_id) != None and self.ts_map[ts][uid].user_id not in site_id_to_user_id_to_visits[self.ts_map[ts][uid].site_id]:
+                        site_id_to_user_id_to_visits[self.ts_map[ts][uid].site_id] = {self.ts_map[ts][uid].user_id: 1}
+                    else:
+                        site_id_to_user_id_to_visits[self.ts_map[ts][uid].site_id][self.ts_map[ts][uid].user_id] += 1
+
+        users_visited_more = []
+        for i in site_id_to_user_id_to_visits:
+            for x in site_id_to_user_id_to_visits[i]:
+                if site_id_to_user_id_to_visits[i][x] > min_num_visits:
+                    users_visited_more.append([i, site_id_to_user_id_to_visits[i], site_id_to_user_id_to_visits[i][x]])
+        
+        print(users_visited_more)
+
+
         return {}
 
     def get_topthree_by_last_vist_uuids(self):
@@ -75,17 +108,18 @@ if __name__ == "__main__":
     # can compute the number of unique user_id's found in these 844 rows. Which site_id has the largest
     # number of unique users? And what's the number?
     val = processor.get_uuids_siteid_by_country("BDV")
-    print("Site_id of the site with the greatest number of uuids in country code BDV: {} \n Count of uuids from site with greatest number of uuids in country code BDV: {}".format(val[0], val[1]))
+    print("Site_id of the site with the greatest number of uuids in country code BDV: {} \nCount of uuids from site with greatest number of uuids in country code BDV: {}".format(val[0], val[1]))
 
     # Between 2019-02-03 00:00:00 and 2019-02-04 23:59:59, there are four users who
     # visited a certain site more than 10 times. Find these four users & which sites
     # they (each) visited more than 10 times.
     # (Simply provides four triples in the form (user_id, site_id,
     # number of visits) in the box below.)
-    val = processor.find_users_by_ts_and_site_visits("2019-02-03 00:00:00", "2019-02-04 23:59:59", 10)
+    val = processor.find_users_by_ts_and_site_visits(datetime.strptime("2019-02-03 00:00:00", "%Y-%m-%d %H:%M:%S"),
+        datetime.strptime("2019-02-04 23:59:59", "%Y-%m-%d %H:%M:%S"), 10)
     for uid in val:
         print("user_id: {},  site_id: {}, visits: {}".format(val[uid].uid, val[uid].sid, val[uid].visits))
-
+    exit(0)
     # For each site, compute the unique number of users whose last visit (found in the
     # original data set) was to that site. For instance, user "LC3561"'s last visit is
     # to "N0OTG" based on timestamp data. Based on this measure, what are top three sites?
